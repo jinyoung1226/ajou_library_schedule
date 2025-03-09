@@ -1,5 +1,6 @@
-package ajou_library.domain.entity;
+package ajou_library.domain.WorkSchedule.entity;
 
+import ajou_library.domain.User.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
