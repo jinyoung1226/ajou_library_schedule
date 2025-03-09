@@ -25,4 +25,10 @@ public class UserController {
         BaseResponse baseResponse = userService.updateUser(id, userDTO);
         return ResponseEntity.ok(baseResponse);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseResponse> DeleteUser(@PathVariable Long id) {
+        BaseResponse baseResponse = userService.deleteUser(id);
+        return ResponseEntity.ok(baseResponse);
+    }
 }

@@ -54,4 +54,16 @@ public class UserService {
                 .message("근로학생 수정이 완료되었습니다.")
                 .build();
     }
+
+    public BaseResponse deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("근로학생을 찾을 수 없습니다."));
+        userRepository.delete(user);
+
+        log.info("삭제된 이름: " + user.getName() + ", 근무하는 층: " + user.getLocation());
+
+        return BaseResponse.builder()
+                .message("근로학생 삭제가 완료되었습니다.")
+                .build();
+    }
 }
