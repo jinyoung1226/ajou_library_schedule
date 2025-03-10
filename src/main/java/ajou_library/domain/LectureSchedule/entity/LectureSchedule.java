@@ -1,8 +1,10 @@
 package ajou_library.domain.LectureSchedule.entity;
 
 import ajou_library.domain.User.entity.User;
+import ajou_library.global.entity.DayOfWeek;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Builder
 @Table(name = "LectureSchedule")
 public class LectureSchedule {
 
@@ -25,6 +28,10 @@ public class LectureSchedule {
 
     @Column(name = "end_time")
     private LocalTime endTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "day_of_week", nullable = false)
+    private DayOfWeek day;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
