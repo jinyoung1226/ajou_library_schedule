@@ -20,6 +20,11 @@ public class LectureScheduleController {
     public ResponseEntity<BaseResponse> addLectureSchedule(@PathVariable Long id, @RequestBody LectureScheduleDTO lectureScheduleDTO) {
         BaseResponse baseResponse = lectureScheduleService.addLectureSchedule(id, lectureScheduleDTO);
         return ResponseEntity.ok(baseResponse);
+    }
 
+    @DeleteMapping("/{LectureScheduleId}")
+    public ResponseEntity<BaseResponse> deleteLectureSchedule(@PathVariable Long LectureScheduleId) {
+        BaseResponse baseResponse = lectureScheduleService.deleteLectureSchedule(LectureScheduleId);
+        return ResponseEntity.ok(baseResponse);
     }
 }
