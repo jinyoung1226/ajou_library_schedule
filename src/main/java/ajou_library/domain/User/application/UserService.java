@@ -37,6 +37,12 @@ public class UserService {
                 .build();
     }
 
+    /**
+     * 근로학생 정보 수정하는 메서드
+     * @param id
+     * @param userDTO
+     * @return 근로학생 수정 완료 메시지 응답
+     */
     public BaseResponse updateUser(Long id, UserDTO userDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("근로학생을 찾을 수 없습니다."));
@@ -55,6 +61,11 @@ public class UserService {
                 .build();
     }
 
+    /**
+     * 근로학생 삭제하는 메서드
+     * @param id
+     * @return 근로학생 삭제 완료 메시지 응답
+     */
     public BaseResponse deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("근로학생을 찾을 수 없습니다."));
