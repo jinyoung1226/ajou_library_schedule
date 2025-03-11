@@ -26,16 +26,16 @@ public class LectureScheduleService {
     private final LectureScheduleRepository lectureScheduleRepository;
 
     /**
-     * 근무 시간 등록하는 메서드
+     * 수업 시간 등록하는 메서드
      * @param id
      * @param lectureScheduleDTO
-     * @return 근무 시간 등록 완료 메시지 응답
+     * @return 수업 시간 등록 완료 메시지 응답
      */
     public BaseResponse addLectureSchedule(Long id, LectureScheduleDTO lectureScheduleDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("근로학생을 찾을 수 없습니다."));
 
-        // 해당 유저의 요일에 이미 등록된 근로 시간을 전부 리스트로 갖고와서 중복인지 대조하는 과정
+        // 해당 유저의 요일에 이미 등록된 수업 시간을 전부 리스트로 갖고와서 중복인지 대조하는 과정
         List<LectureSchedule> lectureSchedules = lectureScheduleRepository.findByUserAndDay(user, lectureScheduleDTO.getDay());
         boolean conflict = false;
 
@@ -52,7 +52,7 @@ public class LectureScheduleService {
             throw new TimeOverlapException("시간이 중복됩니다.");
         }
 
-        // 중복이 아닐 시, 근로 시간 저장
+        // 중복이 아닐 시, 수업 시간 저장
         LectureSchedule lectureSchedule = LectureSchedule.builder()
                 .startTime(lectureScheduleDTO.getStartTime())
                 .endTime(lectureScheduleDTO.getEndTime())
@@ -61,12 +61,12 @@ public class LectureScheduleService {
                 .build();
         lectureScheduleRepository.save(lectureSchedule);
 
-        log.info("저장된 근로 시간 정보 " + lectureSchedule.getDay() + " 시작 시간: " + lectureSchedule.getStartTime() + " 종료 시간: " + lectureSchedule.getEndTime());
+        log.info("저장된 수업 시간 정보 " + lectureSchedule.getDay() + " 시작 시간: " + lectureSchedule.getStartTime() + " 종료 시간: " + lectureSchedule.getEndTime());
 
-        // 추후에 학교 수업이랑도 겹치는지 확인 필요
+        // 추후에 근로 시간이랑도 겹치는지 확인 필요
 
         return BaseResponse.builder()
-                .message("근로 시간 등록이 완료되었습니다.")
+                .message("수업 시간 등록이 완료되었습니다.")
                 .build();
     }
 
@@ -75,20 +75,20 @@ public class LectureScheduleService {
     }
 
     /**
-     * 근로 시간 삭제하는 메서드
+     * 수업 시간 삭제하는 메서드
      * @param LectureScheduleId
-     * @return 근로 시간 삭제 완료 메시지 응답
+     * @return 수업 시간 삭제 완료 메시지 응답
      */
     public BaseResponse deleteLectureSchedule(Long LectureScheduleId) {
         LectureSchedule lectureSchedule = lectureScheduleRepository.findById(LectureScheduleId)
-                .orElseThrow(() -> new LectureScheduleNotFoundException("근로 시간을 찾을 수 없습니다."));
+                .orElseThrow(() -> new LectureScheduleNotFoundException("수업 시간을 찾을 수 없습니다."));
 
         lectureScheduleRepository.delete(lectureSchedule);
 
-        log.info("id: " + lectureSchedule.getId() + " 인 근로 시간 삭제가 완료되었습니다.");
+        log.info("id: " + lectureSchedule.getId() + " 인 수업 시간 삭제가 완료되었습니다.");
 
         return BaseResponse.builder()
-                .message("근로 시간 삭제가 완료되었습니다.")
+                .message("수업 시간 삭제가 완료되었습니다.")
                 .build();
     }
 }
